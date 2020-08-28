@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ldy.mapper.EmpMapper">
+    <resultMap id="empMap" type="cn.ldy.bean.Emp">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="dept_id" property="deptId"/>
+        <association property="dept"
+                     javaType="cn.ldy.bean.Dept"
+                     column="dept_id"
+                     select="cn.ldy.mapper.DeptMapper.findById"/>
+    </resultMap>
+
+    <sql id="base_colums">
+            id,`name`,dept_id
+    </sql>
+    <sql id="base_where">
+
+    </sql>
+    <sql id="base_insert_colums">
+
+    </sql>
+    <sql id="base_insert_values">
+
+    </sql>
+    <sql id="base_update">
+
+    </sql>
+
+    <select id="findAll" resultMap="depMap">
+        select <include refid="base_colums"></include> from emp
+        <where>
+            <if test="id!=null ">
+                and id=#{id,jdbcType=INTEGER}
+            </if>
+            <if test="name!=null ">
+                and name=#{name,jdbcType=VARCHAR}
+            </if>
+            <if test="deptId!=null ">
+                and deptId=#{deptId,jdbcType=INTEGER}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="findByDeptId" resultType="cn.ldy.bean.Emp">
+        select * from emp where dept_id=#{id}
+    </select>
+    <select id="findById" resultMap="depMap">
+        select * from emp where id=#{id}
+    </select>
+</mapper>

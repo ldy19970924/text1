@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ldy.mapper.SysParamMapper">
+    <resultMap id="sexMap" type="cn.ldy.bean.Sex">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+    </resultMap>
+    <resultMap id="statusMap" type="cn.ldy.bean.Status">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+    </resultMap>
+    
+    <resultMap id="sysParamMap" type="cn.ldy.bean.SysParam">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+    </resultMap>
+
+    <sql id="base_colums">
+            id,code,`name`,`value`
+    </sql>
+    <sql id="base_where">
+        <if test="id!=null ">
+            and id=#{id,jdbcType=INTEGER}
+        </if>
+        <if test="code!=null and code!=''">
+            and code=#{code,jdbcType=VARCHAR}
+        </if>
+        <if test="name!=null and name !=''">
+            and name=#{name,jdbcType=VARCHAR}
+        </if>
+        <if test="value!=null ">
+            and value=#{value,jdbcType=INTEGER}
+        </if>
+    </sql>
+    <sql id="base_insert_colums">
+        <trim suffixOverrides=",">
+            <if test="id!=null ">
+                id,
+            </if>
+            <if test="code!=null and code!=''">
+                code,
+            </if>
+            <if test="name!=null and name !=''">
+                name,
+            </if>
+            <if test="value!=null ">
+                value,
+            </if>
+        </trim>
+
+    </sql>
+    <sql id="base_insert_values">
+        <trim suffixOverrides=",">
+            <if test="id!=null ">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="code!=null and code!=''">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name!=null and name !=''">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="value!=null ">
+                #{value,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </sql>
+    <sql id="base_update">
+        <trim suffixOverrides=",">
+            <if test="id!=null ">
+                id=#{id},
+            </if>
+            <if test="code!=null and code!=''">
+                code=#{code},
+            </if>
+            <if test="name!=null and name !=''">
+                name=#{name},
+            </if>
+            <if test="value!=null ">
+                value=#{value},
+            </if>
+        </trim>
+    </sql>
+    
+    <select id="findAll" >
+        select <include refid="base_colums"></include>
+        from sys_param
+    </select>
+    <select id="findById" resultMap="sysParamMap">
+        select <include refid="base_colums"></include>
+        from sys_param where id=#{id}
+    </select>
+    <insert id="insert" parameterType="cn.ldy.bean.SysParam" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into sys_param (<include refid="base_insert_colums"></include>) 
+        values (<include refid="base_insert_values"></include>)
+    </insert>
+    
+    <update id="updateById" parameterType="cn.ldy.bean.SysParam">
+        update sys_param
+        <set>
+            <include refid="base_update"></include>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="delete" parameterType="cn.ldy.bean.SysParam">
+        delete from sys_param
+        <where>
+            <include refid="base_where"></include>
+        </where>
+    </delete>
+
+</mapper>

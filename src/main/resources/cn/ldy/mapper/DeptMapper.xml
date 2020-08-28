@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ldy.mapper.DeptMapper">
+<resultMap id="depMap" type="cn.ldy.bean.Dept">
+    <id column="d_id" property="id"/>
+    <result column="d_name" property="name"/>
+    <collection property="emps" ofType="cn.ldy.bean.Emp">
+        <id column="e_id" property="id"/>
+        <result column="e_name" property="name"/>
+        <result column="d_id" property="deptId"/>
+        <association property="dept" javaType="cn.ldy.bean.Dept">
+            <id column="d_id" property="id"/>
+            <result column="d_name" property="name"/>
+        </association>
+        <discriminator javaType="int" column="e_status">
+            <case value=""></case>
+        </discriminator>
+    </collection>
+</resultMap>
+
+    <sql id="base_colums">
+        id,`name`,dept_id
+    </sql>
+    <sql id="base_where">
+
+    </sql>
+    <sql id="base_insert_colums">
+
+    </sql>
+    <sql id="base_insert_values">
+
+    </sql>
+    <sql id="base_update">
+
+    </sql>
+
+<select id="findAll" resultMap="depMap">
+    select e.id e_id,e.name e_name,e.sex e_sex,e.status e_status,d.id d_id,e.name d_name,d.status d_status from dept d,emp e where e.dept_id=d.id
+</select>
+
+<select id="findById" resultMap="depMap">
+    select * from dept where id=#{id}
+</select>
+
+</mapper>
