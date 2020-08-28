@@ -22,7 +22,7 @@ public class Test {
         SysParamMapper mapper = session.getMapper(SysParamMapper.class);
 
         //empMapper.findByDeptId(1);
-        List<Dept> depts = deptMapper.findAll();
-        mapper.findAll().forEach(System.out::println);
+//        List<Dept> depts = deptMapper.findAll();
+//        mapper.findAll().forEach(System.out::println);
     }
 }
